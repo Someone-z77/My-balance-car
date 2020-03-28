@@ -1,0 +1,200 @@
+卷 Windows 10 的文件夹 PATH 列表
+卷序列号为 6E4F-6B6B
+C:.
+│  LQ_K66FX_LED.dep
+│  LQ_K66FX_LED.ewd
+│  LQ_K66FX_LED.ewp
+│  LQ_K66FX_LED.ewt
+│  LQ_K66FX_LED.eww
+│  文件目录.txt
+│  生成文件目录.bat
+│  
+├─Release
+│  ├─Exe
+│  │      c.out
+│  │      c.sim
+│  │      LQ_K66FX_LED.hex
+│  │      
+│  ├─List
+│  └─Obj
+│          IRQ_Handler.o
+│          IRQ_Handler.pbi
+│          IRQ_Handler.pbi.xcl
+│          LQ_K66FX_LED.pbd
+│          LQ_K66FX_LED.pbd.browse
+│          LQ_K66FX_LED.pbd.linf
+│          LQ_KEY.o
+│          LQ_KEY.pbi
+│          LQ_KEY.pbi.xcl
+│          LQ_LED.o
+│          LQ_LED.pbi
+│          LQ_LED.pbi.xcl
+│          LQ_UART.o
+│          LQ_UART.pbi
+│          LQ_UART.pbi.xcl
+│          main.o
+│          main.pbi
+│          main.pbi.xcl
+│          MK60_ADC.o
+│          MK60_ADC.pbi
+│          MK60_ADC.pbi.xcl
+│          MK60_CMT.o
+│          MK60_CMT.pbi
+│          MK60_CMT.pbi.xcl
+│          MK60_DMA.o
+│          MK60_DMA.pbi
+│          MK60_DMA.pbi.xcl
+│          MK60_FLASH.o
+│          MK60_FLASH.pbi
+│          MK60_FLASH.pbi.xcl
+│          MK60_FTM.o
+│          MK60_FTM.pbi
+│          MK60_FTM.pbi.xcl
+│          MK60_GPIO.o
+│          MK60_GPIO.pbi
+│          MK60_GPIO.pbi.xcl
+│          MK60_IIC.o
+│          MK60_IIC.pbi
+│          MK60_IIC.pbi.xcl
+│          MK60_LPTMR.o
+│          MK60_LPTMR.pbi
+│          MK60_LPTMR.pbi.xcl
+│          MK60_PIT.o
+│          MK60_PIT.pbi
+│          MK60_PIT.pbi.xcl
+│          MK60_PLL.o
+│          MK60_PLL.pbi
+│          MK60_PLL.pbi.xcl
+│          MK60_SYSTICK.o
+│          MK60_SYSTICK.pbi
+│          MK60_SYSTICK.pbi.xcl
+│          MK60_UART.o
+│          MK60_UART.pbi
+│          MK60_UART.pbi.xcl
+│          MK60_WDOG.o
+│          MK60_WDOG.pbi
+│          MK60_WDOG.pbi.xcl
+│          start.o
+│          start.pbi
+│          start.pbi.xcl
+│          startup_MK66F18.o
+│          
+├─settings
+│      LQ_K66FX_LED.crun
+│      LQ_K66FX_LED.dbgdt
+│      LQ_K66FX_LED.Debug.cspy.bat
+│      LQ_K66FX_LED.Debug.cspy.ps1
+│      LQ_K66FX_LED.Debug.driver.xcl
+│      LQ_K66FX_LED.Debug.general.xcl
+│      LQ_K66FX_LED.dnx
+│      LQ_K66FX_LED.Release.cspy.bat
+│      LQ_K66FX_LED.Release.cspy.ps1
+│      LQ_K66FX_LED.Release.driver.xcl
+│      LQ_K66FX_LED.Release.general.xcl
+│      LQ_K66FX_LED.wsdt
+│      LQ_K66FX_LED_Debug.jlink
+│      LQ_K66FX_LED_Release.jlink
+│      
+└─src
+    ├─Drive
+    │      common.h
+    │      MK60_ADC.c
+    │      MK60_ADC.h
+    │      MK60_CMT.c
+    │      MK60_CMT.h
+    │      MK60_DMA.c
+    │      MK60_DMA.h
+    │      MK60_FLASH.c
+    │      MK60_FLASH.h
+    │      MK60_FTM.c
+    │      MK60_FTM.h
+    │      MK60_GPIO.c
+    │      MK60_GPIO.h
+    │      MK60_GPIO_Cfg.h
+    │      MK60_IIC.c
+    │      MK60_IIC.h
+    │      MK60_LPTMR.c
+    │      MK60_LPTMR.h
+    │      MK60_PIT.c
+    │      MK60_PIT.h
+    │      MK60_PLL.c
+    │      MK60_PLL.h
+    │      MK60_SYSTICK.c
+    │      MK60_SYSTICK.h
+    │      MK60_UART.c
+    │      MK60_UART.h
+    │      MK60_WDOG.c
+    │      MK60_WDOG.h
+    │      
+    ├─Project_Setting
+    │  ├─Libs
+    │  │      arm_common_tables.h
+    │  │      arm_const_structs.h
+    │  │      arm_math.h
+    │  │      core_cm4.h
+    │  │      core_cm4_simd.h
+    │  │      core_cmFunc.h
+    │  │      core_cmInstr.h
+    │  │      MK66F18.h
+    │  │      system_MK66F18.c
+    │  │      system_MK66F18.h
+    │  │      
+    │  ├─Linker
+    │  │      FlashK66Fxxx256K.board
+    │  │      LQK66FLASH1M.icf
+    │  │      LQK66RAM256K.icf
+    │  │      MK66FX1M0xxx18.ddf
+    │  │      MK66FX1M0xxx18_flash.scf
+    │  │      Pflash.icf
+    │  │      
+    │  └─Startup
+    │          start.c
+    │          startup_MK66F18.s
+    │          
+    └─User
+            ANO_DT.c
+            ANO_DT.h
+            include.h
+            IRQ_Handler.c
+            LQ_12864.c
+            LQ_12864.h
+            LQ_9AX.c
+            LQ_9AX.h
+            LQ_ADC.c
+            LQ_ADC.h
+            LQ_CAMERA.c
+            LQ_CAMERA.h
+            LQ_CCD.c
+            LQ_CCD.h
+            LQ_FLASH.c
+            LQ_FLASH.h
+            LQ_KEY.c
+            LQ_KEY.h
+            LQ_LED.c
+            LQ_LED.h
+            LQ_LPTMR.c
+            LQ_LPTMR.h
+            LQ_MOTOR.c
+            LQ_MOTOR.h
+            LQ_MPU6050.c
+            LQ_MPU6050.h
+            LQ_MT9V034.c
+            LQ_MT9V034.h
+            LQ_OV7725.c
+            LQ_OV7725.h
+            LQ_PIT.c
+            LQ_PIT.h
+            LQ_SD5.c
+            LQ_SD5.h
+            LQ_SGP18T.c
+            LQ_SGP18T.h
+            LQ_SYSTICK.c
+            LQ_SYSTICK.h
+            LQ_UART.c
+            LQ_UART.h
+            LQ_Ultrasonic.c
+            LQ_Ultrasonic.h
+            LQ_WDOG.c
+            LQ_WDOG.h
+            main.c
+            

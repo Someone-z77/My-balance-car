@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<userOverrides>
+    <override>
+        <path>D:\LAB718\智能车比赛\K66FX核心板资料1\龙邱K66F系列核心板历程\K66 例程\34.龙邱K66 ICM20602 SPI例程\src\Drive\MK60_PLL.c</path>
+        <encoding>System</encoding>
+    </override>
+    <override>
+        <path>D:\LAB718\智能车比赛\K66FX核心板资料1\龙邱K66F系列核心板历程\K66 例程\34.龙邱K66 ICM20602 SPI例程\src\User\main.c</path>
+        <encoding>System</encoding>
+    </override>
+</userOverrides>

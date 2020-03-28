@@ -1,0 +1,17 @@
+"D:\718lab\arm\bin\armproc.dll" 
+
+"D:\718lab\arm\bin\armjlink2.dll" 
+
+"D:\LAB718\智能车比赛\K66FX核心板资料1\龙邱K66F系列核心板历程\K66 例程\34.龙邱K66 ICM20602 SPI例程\Release\Exe\c.out" 
+
+--plugin="D:\718lab\arm\bin\armbat.dll" 
+
+--device_macro="D:\718lab\arm\config\debugger\NXP\Kxx.dmac" 
+
+--device_macro="D:\718lab\arm\config\debugger\NXP\K6x_Trace.dmac" 
+
+--flash_loader="D:\718lab\arm\config\flashloader\NXP\FlashK65Fxxx256K.board" 
+
+
+
+
