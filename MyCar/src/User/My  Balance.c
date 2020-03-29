@@ -2,20 +2,20 @@
 #include "include.h"
 
 
-//  1ms÷–∂œ£ø£ø£ø
+//  1ms‰∏≠Êñ≠ÔºüÔºüÔºü
 //float dt=PIT_period;
 
-//  ≤Œ ˝¥´µ›£ø£ø£ø
+//  ÂèÇÊï∞‰º†ÈÄíÔºüÔºüÔºü
 
-/*±‰¡ø1 ------------------------------------------ */ 
-float x_gyro;//Ω«ÀŸ∂»              // Angle_Calculate
-float x_acc; //º”ÀŸ∂»    
+/*ÂèòÈáè1 ------------------------------------------ */ 
+float x_gyro;//ËßíÈÄüÂ∫¶              // Angle_Calculate
+float x_acc; //Âä†ÈÄüÂ∫¶    
 float g_fCarAngle;                //  Angle_Control
 
 float ANGLE_CONTROL_P;           //P
 float ANGLE_CONTROL_D;              //D
 float ANGLE_CONTROL_OUT_MAX;
-float ANGLE_CONTROL_OUT_MIN;        //Ω«∂» ‰≥ˆœﬁ∑˘
+float ANGLE_CONTROL_OUT_MIN;        //ËßíÂ∫¶ËæìÂá∫ÈôêÂπÖ
 
 float g_fAngleControl_Out;
 
@@ -23,40 +23,40 @@ float g_fAngleControl_Out;
 
 
 
-void Hubu_Filter(float x_acc,float x_gyro)//ª•≤π¬À≤®
+void Hubu_Filter(float x_acc,float x_gyro)//‰∫íË°•Êª§Ê≥¢
 {
    float angle;
-   float k1;      //»®÷ÿ            
+   float k1;      //ÊùÉÈáç            
    float dt;
       angle+=x_gyro*dt;
       g_fCarAngle=k1*angle+(1-k1)*x_acc;
 }
 
-void Angle_Calculate(void)//º∆À„«„Ω«
+void Angle_Calculate(void)//ËÆ°ÁÆóÂÄæËßí
 {   
    
    ICM20602_Attitude_Read();
    
-   Gyro_offset();//Õ”¬›“«¡„∆Ø
+   Gyro_offset();//ÈôÄËû∫‰ª™Èõ∂ÊºÇ
 
-   //º”ÀŸ∂»º∆
-   x_acc=asin(Attitude_data.acc_x)*180/pi;//Ω«∂» °„
-   //Õ”¬›“«
-   x_gyro=Attitude_data.gyro_x-Attitude_offset.gyro_x;//∏©—ˆ-Ω«ÀŸ∂» °„/s
+   //Âä†ÈÄüÂ∫¶ËÆ°
+   x_acc=asin(Attitude_data.acc_x)*180/pi;//ËßíÂ∫¶ ¬∞
+   //ÈôÄËû∫‰ª™
+   x_gyro=Attitude_data.gyro_x-Attitude_offset.gyro_x;//‰øØ‰ª∞-ËßíÈÄüÂ∫¶ ¬∞/s
    
    Hubu_Filter(x_acc,x_gyro);
   
 }
 
 
-void Angle_Control()//÷±¡¢øÿ÷∆
+void Angle_Control()//Áõ¥Á´ãÊéßÂà∂
 {
    float fValue; 
 
    fValue = g_fCarAngle*ANGLE_CONTROL_P + 
-        x_gyro* ANGLE_CONTROL_D;            //  PDøÿ÷∆
+        x_gyro* ANGLE_CONTROL_D;            //  PDÊéßÂà∂
    
-   if(fValue > ANGLE_CONTROL_OUT_MAX)             fValue = ANGLE_CONTROL_OUT_MAX;//œﬁ∑˘
+   if(fValue > ANGLE_CONTROL_OUT_MAX)             fValue = ANGLE_CONTROL_OUT_MAX;//ÈôêÂπÖ
    else if(fValue < ANGLE_CONTROL_OUT_MIN)          fValue = ANGLE_CONTROL_OUT_MIN;
    
    g_fAngleControl_Out=fValue;

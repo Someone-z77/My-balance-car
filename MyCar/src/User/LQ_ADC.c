@@ -3,20 +3,20 @@
 
 
 /*------------------------------------------------------------------------------------------------------
-����    ����ADC_Get
-����    �ܡ���ȡ����ĸ���ϵ�11·ADC��ֵ
-����    ����num �� 0 ~ 10
-���� �� ֵ��ADC��ȡ��ֵ
-��ʵ    ����ADC_Get(0);         //��ȡAD0�ӿڵ�ֵ
-��ע�����ADC1_SE10 =10,       // PTB4      ĸ���ϵ�AD0      
-            ADC1_SE11 =11,       // PTB5      ĸ���ϵ�AD1
-            ADC1_SE12 =12,       // PTB6      ĸ���ϵ�AD2
-            ADC1_SE13 =13,       // PTB7      ĸ���ϵ�AD3
-            ADC1_SE14 =14,       // PTB10     ĸ���ϵ�AD4
-            ADC1_SE15 =15,       // PTB11     ĸ���ϵ�AD5
-            ADC1_SE16 =16,       // ADC1_SE16 ĸ���ϵ�AD6
-            ADC0_SE16 =16,       // ADC0_SE16 ĸ���ϵ�AD7
-            ADC0_SE11 =11,       // PTA8      ĸ���ϵ�AD8
+【函    数】ADC_Get
+【功    能】获取龙邱母板上的11路ADC均值
+【参    数】num ： 0 ~ 10
+【返 回 值】ADC读取的值
+【实    例】ADC_Get(0);         //获取AD0接口的值
+【注意事项】ADC1_SE10 =10,       // PTB4      母板上的AD0      
+            ADC1_SE11 =11,       // PTB5      母板上的AD1
+            ADC1_SE12 =12,       // PTB6      母板上的AD2
+            ADC1_SE13 =13,       // PTB7      母板上的AD3
+            ADC1_SE14 =14,       // PTB10     母板上的AD4
+            ADC1_SE15 =15,       // PTB11     母板上的AD5
+            ADC1_SE16 =16,       // ADC1_SE16 母板上的AD6
+            ADC0_SE16 =16,       // ADC0_SE16 母板上的AD7
+            ADC0_SE11 =11,       // PTA8      母板上的AD8
 --------------------------------------------------------------------------------------------------------*/
 uint16_t ADC_Get(uint8_t num)
 {
@@ -67,12 +67,12 @@ uint16_t ADC_Get(uint8_t num)
 
 
 /*------------------------------------------------------------------------------------------------------
-����    ����Test_ADC
-����    �ܡ�����ĸ���ϵ�10·ADC�ӿ�
-����    ������
-���� �� ֵ����
-��ʵ    ����Test_ADC(); //��ӡ����ʾ��ѹ
-��ע�����
+【函    数】Test_ADC
+【功    能】测试母板上的10路ADC接口
+【参    数】无
+【返 回 值】无
+【实    例】Test_ADC(); //打印并显示电压
+【注意事项】
 --------------------------------------------------------------------------------------------------------*/
 #ifdef LQ_OLED
 void Test_ADC(void)
@@ -86,16 +86,16 @@ void Test_ADC(void)
     
     OLED_Init();
     OLED_CLS();
-    printf("ADC ��������");
-    printf("ADC1_SE10 =10,       // PTB4      ĸ���ϵ�AD0\n  ");  
-    printf("ADC1_SE11 =11,       // PTB5      ĸ���ϵ�AD1\n ");
-    printf("ADC1_SE12 =12,       // PTB6      ĸ���ϵ�AD2\n ");
-    printf("ADC1_SE13 =13,       // PTB7      ĸ���ϵ�AD3\n ");
-    printf("ADC1_SE14 =14,       // PTB10     ĸ���ϵ�AD4\n ");
-    printf("ADC1_SE15 =15,       // PTB11     ĸ���ϵ�AD5\n ");
-    printf("ADC1_SE16 =16,       // ADC1_SE16 ĸ���ϵ�AD6\n ");
-    printf("ADC0_SE16 =16,       // ADC0_SE16 ĸ���ϵ�AD7\n ");
-    printf("ADC0_SE11 =11,       // PTA8      ĸ���ϵ�AD8\n ");
+    printf("ADC 测试例程");
+    printf("ADC1_SE10 =10,       // PTB4      母板上的AD0\n  ");  
+    printf("ADC1_SE11 =11,       // PTB5      母板上的AD1\n ");
+    printf("ADC1_SE12 =12,       // PTB6      母板上的AD2\n ");
+    printf("ADC1_SE13 =13,       // PTB7      母板上的AD3\n ");
+    printf("ADC1_SE14 =14,       // PTB10     母板上的AD4\n ");
+    printf("ADC1_SE15 =15,       // PTB11     母板上的AD5\n ");
+    printf("ADC1_SE16 =16,       // ADC1_SE16 母板上的AD6\n ");
+    printf("ADC0_SE16 =16,       // ADC0_SE16 母板上的AD7\n ");
+    printf("ADC0_SE11 =11,       // PTA8      母板上的AD8\n ");
 
     
     uint16_t batv0 = (uint16_t)(ADC_Get(0)*0.806);
@@ -112,7 +112,7 @@ void Test_ADC(void)
     char txt[16];
     while(1)
     {
-        /* ��ȡ ADCͨ��ֵ */
+        /* 获取 ADC通道值 */
         batv0 = (uint16_t)(ADC_Get(0)*0.806);
         batv1 = (uint16_t)(ADC_Get(1)*0.806);
         batv2 = (uint16_t)(ADC_Get(2)*0.806);
@@ -123,19 +123,19 @@ void Test_ADC(void)
         batv7 = (uint16_t)(ADC_Get(7)*0.806);
         batv8 = (uint16_t)(ADC_Get(8)*0.806);
           
-        switch(KEY_Read(1))     //�������·�ҳ
+        switch(KEY_Read(1))     //按键按下翻页
         {
           case 1:
-            OLED_CLS();          //LCD����
-            key = 0;            //K0 ���� ��һҳ
+            OLED_CLS();          //LCD清屏
+            key = 0;            //K0 按下 第一页
             break;           
           case 2: 
-            OLED_CLS();          //LCD����
-            key = 1;            //K1 ���� �ڶ�ҳ
+            OLED_CLS();          //LCD清屏
+            key = 1;            //K1 按下 第二页
             break;
           case 3: 
-            OLED_CLS();          //LCD����
-            key = 2;            //K1 ���� �ڶ�ҳ
+            OLED_CLS();          //LCD清屏
+            key = 2;            //K1 按下 第二页
             break;
           default:
             
@@ -203,18 +203,18 @@ void Test_ADC(void)
     ADC_Init(ADC0);
     ADC_Init(ADC1);
     
-    TFTSPI_Init(1);                 //LCD��ʼ��  0:����  1������
+    TFTSPI_Init(1);                 //LCD初始化  0:横屏  1：竖屏
     TFTSPI_CLS(u16BLUE);
-    printf("ADC ��������");
-    printf("ADC1_SE10 =10,       // PTB4      ĸ���ϵ�AD0\n  ");  
-    printf("ADC1_SE11 =11,       // PTB5      ĸ���ϵ�AD1\n ");
-    printf("ADC1_SE12 =12,       // PTB6      ĸ���ϵ�AD2\n ");
-    printf("ADC1_SE13 =13,       // PTB7      ĸ���ϵ�AD3\n ");
-    printf("ADC1_SE14 =14,       // PTB10     ĸ���ϵ�AD4\n ");
-    printf("ADC1_SE15 =15,       // PTB11     ĸ���ϵ�AD5\n ");
-    printf("ADC1_SE16 =16,       // ADC1_SE16 ĸ���ϵ�AD6\n ");
-    printf("ADC0_SE16 =16,       // ADC0_SE16 ĸ���ϵ�AD7\n ");
-    printf("ADC0_SE11 =11,       // PTA8      ĸ���ϵ�AD8\n ");
+    printf("ADC 测试例程");
+    printf("ADC1_SE10 =10,       // PTB4      母板上的AD0\n  ");  
+    printf("ADC1_SE11 =11,       // PTB5      母板上的AD1\n ");
+    printf("ADC1_SE12 =12,       // PTB6      母板上的AD2\n ");
+    printf("ADC1_SE13 =13,       // PTB7      母板上的AD3\n ");
+    printf("ADC1_SE14 =14,       // PTB10     母板上的AD4\n ");
+    printf("ADC1_SE15 =15,       // PTB11     母板上的AD5\n ");
+    printf("ADC1_SE16 =16,       // ADC1_SE16 母板上的AD6\n ");
+    printf("ADC0_SE16 =16,       // ADC0_SE16 母板上的AD7\n ");
+    printf("ADC0_SE11 =11,       // PTA8      母板上的AD8\n ");
 
     TFTSPI_P8X16Str(2,0,"LQ ADC Test",u16RED,u16BLUE);
     uint16_t batv0 = (uint16_t)(ADC_Get(0)*0.806);
@@ -230,7 +230,7 @@ void Test_ADC(void)
     char txt[16];
     while(1)
     {
-        /* ��ȡ ADCͨ��ֵ */
+        /* 获取 ADC通道值 */
         batv0 = (uint16_t)(ADC_Get(0)*0.806);
         batv1 = (uint16_t)(ADC_Get(1)*0.806);
         batv2 = (uint16_t)(ADC_Get(2)*0.806);
