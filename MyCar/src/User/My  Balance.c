@@ -16,28 +16,10 @@ float ANGLE_CONTROL_P;           //P
 float ANGLE_CONTROL_D;              //D
 float ANGLE_CONTROL_OUT_MAX;
 float ANGLE_CONTROL_OUT_MIN;        //角度输出限幅
-/*-------------------------------------------------------------------------------*/
-/*-------------------------------------------------------------------------------*/
-float g_fSpeedControlIntegral;           //  Speed_Control
- 
-float g_fSpeedControlOut_New;            //  SpeedControl_Output
-float g_fSpeedControlOut_Old;
-
-float g_fDirectionControlOut_New;       //  DirectionControl_Output
-float g_fDirectionControlOut_Old;
 
 float g_fAngleControl_Out;
-float g_fDirectionControl_Out;    //Motor_Output
-float g_fSpeedControl_Out;
 
-float g_fLeftMotorOut;
-float g_fRightMotorOut;    //Motor_Speed_Out
-
-float fLeftVoltage; 
-float fRightVoltage;       //Set_Motor_Voltage
-
-float g_nSpeedControlPeriod;
-/**************************************************************/
+/*-------------------------------------------------------------------------------*/
 
 
 
@@ -83,45 +65,12 @@ void Angle_Control()//直立控制
 
 
 
-void Speed_Control()//速度控制
-{
-   float fValue; 
-
-   fValue = g_fSpeedControlOut_New - g_fSpeedControlOut_Old; 
-   
-   g_fSpeedControl_Out = fValue * 
-         (g_nSpeedControlPeriod+1) /90 + g_fSpeedControlOut_Old;
-   
-   
-}
-
-void SpeedControl_Output(void)//速度输出平滑函数
-{
-   //这个不会写    
-}
-
-
-
-void Direction_Control(void)//方向控制
-{
-}
-void DirectionControl_Output(void)//方向输出平滑函数
-{
-}
 
 
 
 
-void Motor_Output(void)//电机输出
-{
-  
-}
-void Motor_Speed_Out(void)//电机PWM计算
-{
-}
-void Set_Motor_Voltage(void)//PWM输出
-{
-}
+
+
 
 
 

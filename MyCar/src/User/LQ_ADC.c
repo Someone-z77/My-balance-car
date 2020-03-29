@@ -1,20 +1,10 @@
-/*-----------------------------------------------------------------------------------------------------
-【平    台】龙邱K60核心板-智能车板
-【编    写】LQ-005
-【E-mail  】chiusir@163.com
-【软件版本】V1.0，龙邱开源代码，仅供参考，后果自负
-【最后更新】2019年04月02日
-【网    站】http://www.lqist.cn
-【淘宝店铺】http://shop36265907.taobao.com
-【编译平台】IAR 8.2
-【功    能】
-【注意事项】
--------------------------------------------------------------------------------------------------------*/
 #include "include.h"
 #include "LQ_ADC.h"
+
+
 /*------------------------------------------------------------------------------------------------------
 【函    数】ADC_Get
-【功    能】获取龙邱母板上的11路ADC值
+【功    能】获取龙邱母板上的11路ADC均值
 【参    数】num ： 0 ~ 10
 【返 回 值】ADC读取的值
 【实    例】ADC_Get(0);         //获取AD0接口的值
@@ -33,39 +23,39 @@ uint16_t ADC_Get(uint8_t num)
     switch(num)
     {
       case 0:
-        return ADC_Mid(ADC1, ADC1_SE10, ADC_12bit);
+        return ADC_Ave(ADC1,ADC1_SE10,ADC_12bit,100);
         break;
         
       case 1:
-        return ADC_Mid(ADC1, ADC1_SE11, ADC_12bit);
+        return ADC_Ave(ADC1,ADC1_SE11,ADC_12bit,100);
         break;
         
       case 2:
-        return ADC_Mid(ADC1, ADC1_SE12, ADC_12bit);
+        return ADC_Ave(ADC1,ADC1_SE12,ADC_12bit,100);
         break;
         
       case 3:
-        return ADC_Mid(ADC1, ADC1_SE13, ADC_12bit);
+        return ADC_Ave(ADC1,ADC1_SE13,ADC_12bit,100);
         break;
         
       case 4:
-        return ADC_Mid(ADC1, ADC1_SE14, ADC_12bit);
+        return ADC_Ave(ADC1,ADC1_SE14,ADC_12bit,100);
         break;
         
       case 5:
-        return ADC_Mid(ADC1, ADC1_SE15, ADC_12bit);
+        return ADC_Ave(ADC1,ADC1_SE15,ADC_12bit,100);
         break;
         
       case 6:
-        return ADC_Mid(ADC1, ADC1_SE16, ADC_12bit);
+        return ADC_Ave(ADC1,ADC1_SE16,ADC_12bit,100);
         break;
         
       case 7:
-        return ADC_Mid(ADC0, ADC0_SE16, ADC_12bit);
+        return ADC_Ave(ADC0,ADC0_SE16,ADC_12bit,100);
         break;
         
       case 8:
-        return ADC_Mid(ADC0, ADC0_SE11, ADC_12bit);
+        return ADC_Ave(ADC0,ADC0_SE11,ADC_12bit,100);
         break;
         
         

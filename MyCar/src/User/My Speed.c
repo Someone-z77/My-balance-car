@@ -18,6 +18,11 @@ struct // pid 结构体
     
 }PID;
 
+ 
+float g_fSpeedControlOut_New;            //  SpeedControl_Output
+float g_fSpeedControlOut_Old;
+float g_nSpeedControlPeriod;
+float g_fSpeedControl_Out;
 
 
 /*------------------------------------------------------*/  
@@ -38,7 +43,7 @@ int16 read_CNT_L()
     return val;
 }
 /*---------------------------------------------------------*/
-void Get_speed()
+void Get_speed()//速度获取
 {
      Left_pulse = read_CNT_L();
      Right_pluse = read_CNT_R();
@@ -51,7 +56,7 @@ void Get_speed()
      g_RealSpd=0.1*g_RealSpd+0.3*(g_Lspeed+g_Rspeed)*0.5;//这后面少了一系列的数！！！
        
 }
-void Speed_PID()
+void Speed_PID()//pid控制速度
 {
      //
      PID.error_old = PID.error_new;
@@ -60,6 +65,24 @@ void Speed_PID()
      
      Speed_out= PID.p*PID.error_new+PID.i*PID.integral+PID.d*(PID.error_new-PID.error_old);
      //输出pwm吧
+}
+
+void Speed_Control()//速度控制
+{
+   
+   
+   
+}
+
+void SpeedControl_Output(void)//速度输出平滑函数
+{
+   //这个不会写  
+      float fValue; 
+
+   fValue = g_fSpeedControlOut_New - g_fSpeedControlOut_Old; 
+   
+   g_fSpeedControl_Out = fValue * 
+         (g_nSpeedControlPeriod+1) /90 + g_fSpeedControlOut_Old;
 }
 
 

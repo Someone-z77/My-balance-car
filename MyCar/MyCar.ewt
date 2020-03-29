@@ -2597,6 +2597,24 @@
             </file>
         </group>
         <group>
+            <name>My Directiion</name>
+            <file>
+                <name>$PROJ_DIR$\src\User\My Direction.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\src\User\My Direction.h</name>
+            </file>
+        </group>
+        <group>
+            <name>My Motor</name>
+            <file>
+                <name>$PROJ_DIR$\src\User\My  Motor.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\src\User\My  Motor.h</name>
+            </file>
+        </group>
+        <group>
             <name>My Balance</name>
             <file>
                 <name>$PROJ_DIR$\src\User\My  Balance.c</name>
