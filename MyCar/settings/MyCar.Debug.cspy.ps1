@@ -23,9 +23,9 @@
 
 if ($debugfile -eq "")
 {
-& "D:\718lab\common\bin\cspybat" -f "D:\LAB718\智能车比赛\K66FX核心板资料1\MyCar\settings\MyCar.Debug.general.xcl" --backend -f "D:\LAB718\智能车比赛\K66FX核心板资料1\MyCar\settings\MyCar.Debug.driver.xcl" 
+& "D:\718lab\common\bin\cspybat" -f "D:\LAB718\GITHUB\My-balance-car\MyCar\settings\MyCar.Debug.general.xcl" --backend -f "D:\LAB718\GITHUB\My-balance-car\MyCar\settings\MyCar.Debug.driver.xcl" 
 }
 else
 {
-& "D:\718lab\common\bin\cspybat" -f "D:\LAB718\智能车比赛\K66FX核心板资料1\MyCar\settings\MyCar.Debug.general.xcl" --debug_file=$debugfile --backend -f "D:\LAB718\智能车比赛\K66FX核心板资料1\MyCar\settings\MyCar.Debug.driver.xcl" 
+& "D:\718lab\common\bin\cspybat" -f "D:\LAB718\GITHUB\My-balance-car\MyCar\settings\MyCar.Debug.general.xcl" --debug_file=$debugfile --backend -f "D:\LAB718\GITHUB\My-balance-car\MyCar\settings\MyCar.Debug.driver.xcl" 
 }

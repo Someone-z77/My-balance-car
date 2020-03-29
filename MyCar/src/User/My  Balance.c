@@ -51,8 +51,7 @@ void Hubu_Filter(float x_acc,float x_gyro)//互补滤波
 }
 
 void Angle_Calculate(void)//计算倾角
-{
-   
+{   
    
    ICM20602_Attitude_Read();
    
@@ -68,22 +67,23 @@ void Angle_Calculate(void)//计算倾角
 }
 
 
-void Angle_Control(void)//直立控制
+void Angle_Control()//直立控制
 {
    float fValue; 
 
    fValue = g_fCarAngle*ANGLE_CONTROL_P + 
-        x_gyro* ANGLE_CONTROL_D;            //  P & D
+        x_gyro* ANGLE_CONTROL_D;            //  PD控制
    
    if(fValue > ANGLE_CONTROL_OUT_MAX)             fValue = ANGLE_CONTROL_OUT_MAX;//限幅
    else if(fValue < ANGLE_CONTROL_OUT_MIN)          fValue = ANGLE_CONTROL_OUT_MIN;
    
    g_fAngleControl_Out=fValue;
+   
 }
 
 
 
-void Speed_Control(void)//速度控制
+void Speed_Control()//速度控制
 {
    float fValue; 
 
@@ -92,12 +92,12 @@ void Speed_Control(void)//速度控制
    g_fSpeedControl_Out = fValue * 
          (g_nSpeedControlPeriod+1) /90 + g_fSpeedControlOut_Old;
    
+   
 }
 
 void SpeedControl_Output(void)//速度输出平滑函数
 {
-  
-     
+   //这个不会写    
 }
 
 
@@ -114,6 +114,7 @@ void DirectionControl_Output(void)//方向输出平滑函数
 
 void Motor_Output(void)//电机输出
 {
+  
 }
 void Motor_Speed_Out(void)//电机PWM计算
 {

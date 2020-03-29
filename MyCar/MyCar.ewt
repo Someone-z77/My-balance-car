@@ -2606,6 +2606,15 @@
             </file>
         </group>
         <group>
+            <name>My Speed</name>
+            <file>
+                <name>$PROJ_DIR$\src\User\My Speed.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\src\User\My Speed.h</name>
+            </file>
+        </group>
+        <group>
             <name>OLED</name>
             <file>
                 <name>$PROJ_DIR$\src\User\LQ_12864.c</name>
