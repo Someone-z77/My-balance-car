@@ -12,13 +12,13 @@ float fRightVoltage;       //Set_Motor_Voltage
 
 
 /*------------------------------------------------------------------*/
-void Motor_Output(void)//电机输出
+void Motor_Output(void)//鐢垫満杈撳嚭
 {
   
 }
-void Motor_Speed_Out(void)//电机PWM计算
+void Motor_Speed_Out(void)//鐢垫満PWM璁＄畻
 {
 }
-void Set_Motor_Voltage(void)//PWM输出
+void Set_Motor_Voltage(void)//PWM杈撳嚭
 {
 }

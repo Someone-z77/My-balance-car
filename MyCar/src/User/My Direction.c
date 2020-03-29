@@ -8,31 +8,31 @@ uint16_t  AD_left[3]={0,0,0},AD_right[3]={0,0,0};
 float  Direct_error[3]={0,0,0};
 
 /*--------------------------------------------------------------------*/
-void Direction_Control(void)//·½Ïò¿ØÖÆ
+void Direction_Control(void)//æ–¹å‘æ§åˆ¶
 {
-     /*×óÓÒË®Æ½µç¸Ğ²É¼¯ */
+     /*å·¦å³æ°´å¹³ç”µæ„Ÿé‡‡é›† */
      AD_left[0]=ADC_Get(0);
      AD_left[1]=ADC_Get(1);
      AD_right[0]=ADC_Get(3);
-     AD_right[1]=ADC_Get(4);           //ÕâÀï×¢ÒâÎ»ÖÃÒª¶ÔÓ¦£¡£¡£¡
+     AD_right[1]=ADC_Get(4);           //è¿™é‡Œæ³¨æ„ä½ç½®è¦å¯¹åº”ï¼ï¼ï¼
      
-     /*×óÓÒÊúÖ±µç¸Ğ²É¼¯*/
+     /*å·¦å³ç«–ç›´ç”µæ„Ÿé‡‡é›†*/
      AD_left[2]=ADC_Get(2);
      AD_right[2]=ADC_Get(5);
      
-     /*¹éÒ»»¯=£¨²âÁ¿Öµ-×îĞ¡Öµ£©/£¨×î´óÖµ-×îĞ¡Öµ£©*/
+     /*å½’ä¸€åŒ–=ï¼ˆæµ‹é‡å€¼-æœ€å°å€¼ï¼‰/ï¼ˆæœ€å¤§å€¼-æœ€å°å€¼ï¼‰*/
      
      
-     /*²î±ÈºÍ---Ë®Æ½*/
+     /*å·®æ¯”å’Œ---æ°´å¹³*/
      Direct_error[0]=(float)(AD_left[0]-AD_right[0])/(AD_left[0]+AD_right[0]);
      Direct_error[1]=(float)(AD_left[1]-AD_right[1])/(AD_left[1]+AD_right[1]);
      
-     /*²î±ÈºÍ---ÊúÖ±*/
+     /*å·®æ¯”å’Œ---ç«–ç›´*/
      Direct_error[2]=(float)(AD_left[2]-AD_right[2])/(AD_left[2]+AD_right[2]);
      
      //if()
 }
-void DirectionControl_Output(void)//·½ÏòÊä³öÆ½»¬º¯Êı
+void DirectionControl_Output(void)//æ–¹å‘è¾“å‡ºå¹³æ»‘å‡½æ•°
 {
   
   

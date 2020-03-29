@@ -2,12 +2,12 @@
 
 
 int16 Left_pulse,Right_pluse;
-float g_Lspeed=0,g_Rspeed=0;//±àÂëÆ÷Âö³å
-float g_RealSpd=0;//²âÁ¿ËÙ¶È
-float g_ExpectSpd=0;//ÆÚÍûËÙ¶È   ¼ÇµÃ³õÊ¼»¯
-float Speed_out;//pidÖ®ºóµÄÊä³ö
+float g_Lspeed=0,g_Rspeed=0;//ç¼–ç å™¨è„‰å†²
+float g_RealSpd=0;//æµ‹é‡é€Ÿåº¦
+float g_ExpectSpd=0;//æœŸæœ›é€Ÿåº¦   è®°å¾—åˆå§‹åŒ–
+float Speed_out;//pidä¹‹åçš„è¾“å‡º
 
-struct // pid ½á¹¹Ìå
+struct // pid ç»“æ„ä½“
 {
     float error_old;
     float error_new;
@@ -26,11 +26,11 @@ float g_fSpeedControl_Out;
 
 
 /*------------------------------------------------------*/  
-int16  read_CNT_R()//ÕâÀïĞèÒªÈ·¶¨Ò»ÏÂ×óÓÒ±àÂëÆ÷¶ÔÓ¦µÄ¹Üjio
+int16  read_CNT_R()//è¿™é‡Œéœ€è¦ç¡®å®šä¸€ä¸‹å·¦å³ç¼–ç å™¨å¯¹åº”çš„ç®¡jio
 {
     short val;   
     val = FTM_CNT_REG(FTM1);    
-    FTM_CNT_REG(FTM1) = 0;    //Çå¿Õ±êÖ¾Î»         
+    FTM_CNT_REG(FTM1) = 0;    //æ¸…ç©ºæ ‡å¿—ä½         
 
     return val;
 }
@@ -38,25 +38,25 @@ int16 read_CNT_L()
 {
     short val;   
     val = FTM_CNT_REG(FTM1);    
-    FTM_CNT_REG(FTM1) = 0;    //Çå¿Õ±êÖ¾Î»         
+    FTM_CNT_REG(FTM1) = 0;    //æ¸…ç©ºæ ‡å¿—ä½         
 
     return val;
 }
 /*---------------------------------------------------------*/
-void Get_speed()//ËÙ¶È»ñÈ¡
+void Get_speed()//é€Ÿåº¦è·å–
 {
      Left_pulse = read_CNT_L();
      Right_pluse = read_CNT_R();
      
-     //ÏÈÀ´Ò»¸öĞ¡Ğ¡µÄÂË²¨
+     //å…ˆæ¥ä¸€ä¸ªå°å°çš„æ»¤æ³¢
      g_Lspeed = 0.3*Left_pulse +0.7*g_Lspeed;
      g_Rspeed = 0.3*Right_pluse  +0.7*g_Rspeed;
      
-     //½ÓÏÂÀ´ÊÇ¼ÆËãËÙ¶È,Ò²ÓĞÒ»¸öĞ¡Ğ¡µÄÂË²¨
-     g_RealSpd=0.1*g_RealSpd+0.3*(g_Lspeed+g_Rspeed)*0.5;//ÕâºóÃæÉÙÁËÒ»ÏµÁĞµÄÊı£¡£¡£¡
+     //æ¥ä¸‹æ¥æ˜¯è®¡ç®—é€Ÿåº¦,ä¹Ÿæœ‰ä¸€ä¸ªå°å°çš„æ»¤æ³¢
+     g_RealSpd=0.1*g_RealSpd+0.3*(g_Lspeed+g_Rspeed)*0.5;//è¿™åé¢å°‘äº†ä¸€ç³»åˆ—çš„æ•°ï¼ï¼ï¼
        
 }
-void Speed_PID()//pid¿ØÖÆËÙ¶È
+void Speed_PID()//pidæ§åˆ¶é€Ÿåº¦
 {
      //
      PID.error_old = PID.error_new;
@@ -64,19 +64,19 @@ void Speed_PID()//pid¿ØÖÆËÙ¶È
      PID.integral+=PID.error_new;
      
      Speed_out= PID.p*PID.error_new+PID.i*PID.integral+PID.d*(PID.error_new-PID.error_old);
-     //Êä³öpwm°É
+     //è¾“å‡ºpwmå§
 }
 
-void Speed_Control()//ËÙ¶È¿ØÖÆ
+void Speed_Control()//é€Ÿåº¦æ§åˆ¶
 {
    
    
    
 }
 
-void SpeedControl_Output(void)//ËÙ¶ÈÊä³öÆ½»¬º¯Êı
+void SpeedControl_Output(void)//é€Ÿåº¦è¾“å‡ºå¹³æ»‘å‡½æ•°
 {
-   //Õâ¸ö²»»áĞ´  
+   //è¿™ä¸ªä¸ä¼šå†™  
       float fValue; 
 
    fValue = g_fSpeedControlOut_New - g_fSpeedControlOut_Old; 

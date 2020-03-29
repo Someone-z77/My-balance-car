@@ -2,17 +2,17 @@
 #include "include.h"
 #include "LQ_ICM20602.h"
 
-Angle_Sensor Attitude_data;             //×ËÌ¬½á¹¹Ìå
-Angle_Sensor Attitude_offset;           //ÁãÆ¯½á¹¹Ìå
+Angle_Sensor Attitude_data;             //å§¿æ€ç»“æ„ä½“
+Angle_Sensor Attitude_offset;           //é›¶æ¼‚ç»“æ„ä½“
 #ifdef LQ_TFT1_8
 void Test_ICM20602(void)
 {
-    TFTSPI_Init(1);                //TFT1.8³õÊ¼»¯  
-    TFTSPI_CLS(u16BLUE);           //ÇåÆÁ
+    TFTSPI_Init(1);                //TFT1.8åˆå§‹åŒ–  
+    TFTSPI_CLS(u16BLUE);           //æ¸…å±
     UART_Init(UART4, 115200);
     char  txt[30];
-	short aacx,aacy,aacz;	        //¼ÓËÙ¶È´«¸ĞÆ÷Ô­Ê¼Êı¾İ
-	short gyrox,gyroy,gyroz;        //ÍÓÂİÒÇÔ­Ê¼Êı¾İ 
+	short aacx,aacy,aacz;	        //åŠ é€Ÿåº¦ä¼ æ„Ÿå™¨åŸå§‹æ•°æ®
+	short gyrox,gyroy,gyroz;        //é™€èºä»ªåŸå§‹æ•°æ® 
     TFTSPI_P8X16Str(2,0,"LQ ICM20602 Test",u16RED,u16BLUE);
     printf("\r\nLQ ICM20602 Test");
     if(ICM20602_Init())
@@ -23,7 +23,7 @@ void Test_ICM20602(void)
         
     while(1)
     {
-        MPU_Get_Raw_data(&aacx,&aacy,&aacz,&gyrox,&gyroy,&gyroz);	//µÃµ½¼ÓËÙ¶È´«¸ĞÆ÷Êı¾İ  
+        MPU_Get_Raw_data(&aacx,&aacy,&aacz,&gyrox,&gyroy,&gyroz);	//å¾—åˆ°åŠ é€Ÿåº¦ä¼ æ„Ÿå™¨æ•°æ®  
         sprintf((char*)txt,"ax:%06d",aacx);
         TFTSPI_P8X16Str(0,1,txt,u16RED,u16BLUE);
         sprintf((char*)txt,"ay:%06d",aacy);
@@ -58,8 +58,8 @@ void Test_ICM20602(void)
 	  float ax,ay,az,gx,gy,gz;
           float gyrox_offset,gyroy_offset,gyroz_offset;
     UART_Init(UART4, 115200);
-    OLED_Init();                  //LCD³õÊ¼»¯
-    OLED_CLS();                   //LCDÇåÆÁ
+    OLED_Init();                  //LCDåˆå§‹åŒ–
+    OLED_CLS();                   //LCDæ¸…å±
     OLED_P8x16Str(15,0,"ICM20602 Test"); 
     printf("\r\nLQ ICM20602 Test");
     
@@ -97,55 +97,55 @@ void Test_ICM20602(void)
 uint8_t ICM20602_Init(void)
 {
     uint8_t res;
-    SPI_Init(SPI1, SPI_PCS1, MASTER, 1, 10);            //ICM20602 Ö§³Ö10M SPI
+    SPI_Init(SPI1, SPI_PCS1, MASTER, 1, 10);            //ICM20602 æ”¯æŒ10M SPI
     delayms(100);
-    res=ICM_Read_Byte(WHO_AM_I);                        //¶ÁÈ¡ICM20602µÄID
-    if(res!=ICM20602_ID)                                 //Æ÷¼şIDÕıÈ·
+    res=ICM_Read_Byte(WHO_AM_I);                        //è¯»å–ICM20602çš„ID
+    if(res!=ICM20602_ID)                                 //å™¨ä»¶IDæ­£ç¡®
     {
         printf("ID=%#X\r\n",res);
         printf("ICM20602 is fail!\n");
     }
     else  printf("ICM20602 is OK!\n");
     res = 0;
-    ICM_Write_Byte(ICM_PWR_MGMT1_REG,0X80);//¸´Î»
-    delayms(100);  //ÑÓÊ±100ms
-    ICM_Write_Byte(ICM_PWR_MGMT1_REG,0X00);//»½ĞÑ
-    delayms(100);  //ÑÓÊ±100ms
+    ICM_Write_Byte(ICM_PWR_MGMT1_REG,0X80);//å¤ä½
+    delayms(100);  //å»¶æ—¶100ms
+    ICM_Write_Byte(ICM_PWR_MGMT1_REG,0X00);//å”¤é†’
+    delayms(100);  //å»¶æ—¶100ms
 
-    ICM_Set_Gyro_Fsr(3);			       //ÍÓÂİÒÇ´«¸ĞÆ÷,¡À2000dps   
-    ICM_Set_Accel_Fsr(3);				   //¼ÓËÙ¶È´«¸ĞÆ÷,¡À16g
+    ICM_Set_Gyro_Fsr(3);			       //é™€èºä»ªä¼ æ„Ÿå™¨,Â±2000dps   
+    ICM_Set_Accel_Fsr(3);				   //åŠ é€Ÿåº¦ä¼ æ„Ÿå™¨,Â±16g
     
-    ICM_Write_Byte(ICM_SAMPLE_RATE_REG,0x07);//ÉèÖÃ²ÉÑùÂÊ
-    ICM_Write_Byte(ICM_CFG_REG,0x02);//µÍÍ¨ÂË²¨
-    ICM_Write_Byte(ACCEL_CONFIG_2,0x18);//¼ÓËÙ¶È¸ßÍ¨ÂË²¨
+    ICM_Write_Byte(ICM_SAMPLE_RATE_REG,0x07);//è®¾ç½®é‡‡æ ·ç‡
+    ICM_Write_Byte(ICM_CFG_REG,0x02);//ä½é€šæ»¤æ³¢
+    ICM_Write_Byte(ACCEL_CONFIG_2,0x18);//åŠ é€Ÿåº¦é«˜é€šæ»¤æ³¢
       
-    //ICM_Set_Rate(1000);					   //ÉèÖÃ²ÉÑùÂÊ1000Hz
-    //ICM_Write_Byte(ICM_CFG_REG,0x02);      //ÉèÖÃÊı×ÖµÍÍ¨ÂË²¨Æ÷   98hz
-    ICM_Write_Byte(ICM_INT_EN_REG,0X00);   //¹Ø±ÕËùÓĞÖĞ¶Ï
-    ICM_Write_Byte(ICM_USER_CTRL_REG,0X00);//I2CÖ÷Ä£Ê½¹Ø±Õ
-    ICM_Write_Byte(ICM_PWR_MGMT1_REG,0X01);//ÉèÖÃCLKSEL,PLL XÖáÎª²Î¿¼
-    ICM_Write_Byte(ICM_PWR_MGMT2_REG,0X00);//¼ÓËÙ¶ÈÓëÍÓÂİÒÇ¶¼¹¤×÷
+    //ICM_Set_Rate(1000);					   //è®¾ç½®é‡‡æ ·ç‡1000Hz
+    //ICM_Write_Byte(ICM_CFG_REG,0x02);      //è®¾ç½®æ•°å­—ä½é€šæ»¤æ³¢å™¨   98hz
+    ICM_Write_Byte(ICM_INT_EN_REG,0X00);   //å…³é—­æ‰€æœ‰ä¸­æ–­
+    ICM_Write_Byte(ICM_USER_CTRL_REG,0X00);//I2Cä¸»æ¨¡å¼å…³é—­
+    ICM_Write_Byte(ICM_PWR_MGMT1_REG,0X01);//è®¾ç½®CLKSEL,PLL Xè½´ä¸ºå‚è€ƒ
+    ICM_Write_Byte(ICM_PWR_MGMT2_REG,0X00);//åŠ é€Ÿåº¦ä¸é™€èºä»ªéƒ½å·¥ä½œ
 
     delayms(100);
-    Gyro_offset();//ÍÓÂİÒÇÁãÆ¯
+    Gyro_offset();//é™€èºä»ªé›¶æ¼‚
     return 0;
 }
 /*-------------------------------------------------*/
-void ICM_Set_Gyro_Fsr(uint8_t fsr)//ÉèÖÃÍÓÂİÒÇÂúÁ¿³Ì·¶Î§
+void ICM_Set_Gyro_Fsr(uint8_t fsr)//è®¾ç½®é™€èºä»ªæ»¡é‡ç¨‹èŒƒå›´
 {
 	ICM_Write_Byte(ICM_GYRO_CFG_REG,fsr<<3);  
-         // fsr:0,¡À250dps;1,¡À500dps;2,¡À1000dps;3,¡À2000dps
+         // fsr:0,Â±250dps;1,Â±500dps;2,Â±1000dps;3,Â±2000dps
 }
 
 /*-------------------------------------------------*/
-void ICM_Set_Accel_Fsr(uint8_t fsr)//ÉèÖÃ¼ÓËÙ¶È´«¸ĞÆ÷ÂúÁ¿³Ì·¶Î§ 
+void ICM_Set_Accel_Fsr(uint8_t fsr)//è®¾ç½®åŠ é€Ÿåº¦ä¼ æ„Ÿå™¨æ»¡é‡ç¨‹èŒƒå›´ 
 {
 	ICM_Write_Byte(ICM_ACCEL_CFG_REG,fsr<<3);
-        //fsr:0,¡À2g;1,¡À4g;2,¡À8g;3,¡À16g
+        //fsr:0,Â±2g;1,Â±4g;2,Â±8g;3,Â±16g
 }
 
 /*-------------------------------------------------*/
-void ICM_Set_LPF(uint16_t lpf)//ÉèÖÃÊı×ÖµÍÍ¨ÂË²¨Æ÷  
+void ICM_Set_LPF(uint16_t lpf)//è®¾ç½®æ•°å­—ä½é€šæ»¤æ³¢å™¨  
 {
 	uint8_t data=0;
 	if(lpf>=188)data=1;
@@ -158,20 +158,20 @@ void ICM_Set_LPF(uint16_t lpf)//ÉèÖÃÊı×ÖµÍÍ¨ÂË²¨Æ÷
 }
 
 /*-------------------------------------------------*/
-void ICM_Set_Rate(uint16_t rate)//ÉèÖÃ²ÉÑùÂÊ
+void ICM_Set_Rate(uint16_t rate)//è®¾ç½®é‡‡æ ·ç‡
 {
 	//rate:4~1000(Hz)
          uint8_t data;
 	if(rate>1000)rate=1000;
 	if(rate<4)rate=4;
 	data=1000/rate-1;
-	ICM_Write_Byte(ICM_SAMPLE_RATE_REG,data);	//ÉèÖÃÊı×ÖµÍÍ¨ÂË²¨Æ÷
- 	ICM_Set_LPF(rate/2);	//×Ô¶¯ÉèÖÃLPFÎª²ÉÑùÂÊµÄÒ»°ë
+	ICM_Write_Byte(ICM_SAMPLE_RATE_REG,data);	//è®¾ç½®æ•°å­—ä½é€šæ»¤æ³¢å™¨
+ 	ICM_Set_LPF(rate/2);	//è‡ªåŠ¨è®¾ç½®LPFä¸ºé‡‡æ ·ç‡çš„ä¸€åŠ
 }
 
 
-/*µÃµ½ÍÓÂİÒÇÖµ(Ô­Ê¼Öµ)
-  gx,gy,gz:ÍÓÂİÒÇx,y,zÖáµÄÔ­Ê¼¶ÁÊı(´ø·ûºÅ)*/
+/*å¾—åˆ°é™€èºä»ªå€¼(åŸå§‹å€¼)
+  gx,gy,gz:é™€èºä»ªx,y,zè½´çš„åŸå§‹è¯»æ•°(å¸¦ç¬¦å·)*/
 
 void ICM_Get_Gyroscope(short *gx,short *gy,short *gz)
 {
@@ -184,7 +184,7 @@ void ICM_Get_Gyroscope(short *gx,short *gy,short *gz)
     
 }
 
-/*µÃµ½¼ÓËÙ¶ÈÖµ(Ô­Ê¼Öµ)*/
+/*å¾—åˆ°åŠ é€Ÿåº¦å€¼(åŸå§‹å€¼)*/
 
 void ICM_Get_Accelerometer(short *ax,short *ay,short *az)
 {
@@ -197,7 +197,7 @@ void ICM_Get_Accelerometer(short *ax,short *ay,short *az)
     
 }
 
-/*µÃµ½¼Ó¼ÆÖµ¡¢½ÇËÙ¶ÈÖµ(Ô­Ê¼Öµ)*/
+/*å¾—åˆ°åŠ è®¡å€¼ã€è§’é€Ÿåº¦å€¼(åŸå§‹å€¼)*/
 
 void ICM_Get_Raw_data(short *ax,short *ay,short *az,short *gx,short *gy,short *gz)
 {
@@ -215,21 +215,21 @@ void ICM_Get_Raw_data(short *ax,short *ay,short *az,short *gx,short *gy,short *g
 
 void ICM20602_Attitude_Read(void)
 {
-    short aacx,aacy,aacz;	        //¼ÓËÙ¶ÈÔ­Ê¼Êı¾İ
-    short gyrox,gyroy,gyroz;        //ÍÓÂİÒÇÔ­Ê¼Êı¾İ
+    short aacx,aacy,aacz;	        //åŠ é€Ÿåº¦åŸå§‹æ•°æ®
+    short gyrox,gyroy,gyroz;        //é™€èºä»ªåŸå§‹æ•°æ®
     ICM_Get_Raw_data(&aacx,&aacy,&aacz,&gyrox,&gyroy,&gyroz);
 
-    Attitude_data.acc_x = (float)aacx/2048;    //  µ¥Î»g(9.8m/s^2)
+    Attitude_data.acc_x = (float)aacx/2048;    //  å•ä½g(9.8m/s^2)
     Attitude_data.acc_y = (float)aacy/2048;
     Attitude_data.acc_z = (float)aacz/2048;
   
-    Attitude_data.gyro_x= (float)gyrox/16.40;       // µ¥Î» ¡ã/s
+    Attitude_data.gyro_x= (float)gyrox/16.40;       // å•ä½ Â°/s
     Attitude_data.gyro_y = (float)gyroy/16.40;
     Attitude_data.gyro_z = (float)gyroz/16.40;
 
 }
 
-void Gyro_offset(void)//ÍÓÂİÒÇÁãÆ¯
+void Gyro_offset(void)//é™€èºä»ªé›¶æ¼‚
 {
     uint16  count=0;
     ICM20602_Attitude_Read();
@@ -253,11 +253,11 @@ void Gyro_offset(void)//ÍÓÂİÒÇÁãÆ¯
 }
 
 /**
-  * @brief    SPI Á¬Ğø¶Á
+  * @brief    SPI è¿ç»­è¯»
   *
-  * @param    reg   ¶ÁµÄ¼Ä´æÆ÷µØÖ·
-  * @param    len   ³¤¶È
-  * @param    buf   ´æ·Å¶Á³öÊı¾İ µÄµØÖ·
+  * @param    reg   è¯»çš„å¯„å­˜å™¨åœ°å€
+  * @param    len   é•¿åº¦
+  * @param    buf   å­˜æ”¾è¯»å‡ºæ•°æ® çš„åœ°å€
   *
   * @return   
   *
@@ -265,23 +265,23 @@ void Gyro_offset(void)//ÍÓÂİÒÇÁãÆ¯
   * 
   * @example  
   *
-  * @date     2019/5/27 ĞÇÆÚÒ»
+  * @date     2019/5/27 æ˜ŸæœŸä¸€
   */
 
 void ICM_Read_Len(uint8_t reg,uint8_t len,uint8_t *buf)
 {   
     buf[0] = reg | 0x80;
-    /* Ğ´ÈëÒª¶ÁµÄ¼Ä´æÆ÷µØÖ· */
+    /* å†™å…¥è¦è¯»çš„å¯„å­˜å™¨åœ°å€ */
     SPI_RadeWrite(SPI1, SPI_PCS1, buf, buf, len + 1);
 
 }
 
 
 /**
-  * @brief    SPI Ğ´
+  * @brief    SPI å†™
   *
-  * @param    reg   Ğ´µÄ¼Ä´æÆ÷µØÖ·
-  * @param    value ÒªĞ´µÄÖµ
+  * @param    reg   å†™çš„å¯„å­˜å™¨åœ°å€
+  * @param    value è¦å†™çš„å€¼
   *
   * @return   
   *
@@ -289,35 +289,35 @@ void ICM_Read_Len(uint8_t reg,uint8_t len,uint8_t *buf)
   *
   * @example  
   *
-  * @date     2019/5/27 ĞÇÆÚÒ»
+  * @date     2019/5/27 æ˜ŸæœŸä¸€
   */
 void ICM_Write_Byte(uint8_t reg,uint8_t value)
 {
     uint8_t buff[2];
 
-    buff[0] = reg;          //ÏÈ·¢ËÍ¼Ä´æÆ÷
-    buff[1] = value;        //ÔÙ·¢ËÍÊı¾İ
+    buff[0] = reg;          //å…ˆå‘é€å¯„å­˜å™¨
+    buff[1] = value;        //å†å‘é€æ•°æ®
 
-    SPI_RadeWrite(SPI1, SPI_PCS1, buff, buff, 2); //·¢ËÍbuffÀïÊı¾İ£¬²¢²É¼¯µ½ buffÀï
+    SPI_RadeWrite(SPI1, SPI_PCS1, buff, buff, 2); //å‘é€buffé‡Œæ•°æ®ï¼Œå¹¶é‡‡é›†åˆ° buffé‡Œ
 }
 
 /**
-  * @brief    SPI ¶Á
+  * @brief    SPI è¯»
   *
-  * @param    reg   ¶ÁµÄ¼Ä´æÆ÷µØÖ·
+  * @param    reg   è¯»çš„å¯„å­˜å™¨åœ°å€
   *
-  * @return   ¶Á³öµÄÊı¾İ
+  * @return   è¯»å‡ºçš„æ•°æ®
   *
   * @note     
   *
   * @example  
   *
-  * @date     2019/5/27 ĞÇÆÚÒ»
+  * @date     2019/5/27 æ˜ŸæœŸä¸€
   */
 uint8_t ICM_Read_Byte(uint8_t reg)
 {
     uint8 buff[2];
-    buff[0] = reg | 0x80;          //ÏÈ·¢ËÍ¼Ä´æÆ÷
+    buff[0] = reg | 0x80;          //å…ˆå‘é€å¯„å­˜å™¨
 
     SPI_RadeWrite(SPI1, SPI_PCS1, buff, buff,  2);
     
