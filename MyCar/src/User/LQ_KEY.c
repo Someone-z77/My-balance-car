@@ -26,6 +26,7 @@ void KEY_Init(void)
    GPIO_PinInit(PTB20, GPI_UP, 1);
    GPIO_PinInit(PTB21, GPI_UP, 1);
    GPIO_PinInit(PTB22, GPI_UP, 1);
+   
 }
 
 /*LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
@@ -135,26 +136,6 @@ void Test_ExtiKEY(void)
     /* 优先级配置 抢占优先级1  子优先级2   越小优先级越高  抢占优先级可打断别的中断 */
     NVIC_SetPriority(PORTB_IRQn,NVIC_EncodePriority(NVIC_GetPriorityGrouping(),1,2));
     NVIC_EnableIRQ(PORTB_IRQn);			         //使能PORTB_IRQn的中断  
-    while (1)
-    {  
-        //测试按键      
 
-        switch(key_exti_flag)  //
-        {
-            case 1:
-                LED_Reverse(0);
-                break;           
-            case 2:      
-                LED_Reverse(1);
-                break;
-            case 3:      
-                LED_Reverse(2);
-                break;
-            default:
-                LED_Reverse(3);
-                break;
-        }
-        //延时
-        delayms(50);
-    }
+    
 }

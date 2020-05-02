@@ -6,17 +6,8 @@ float g_Lspeed=0,g_Rspeed=0;//编码器脉冲
 int16 g_RealSpd_R=0,g_RealSpd_L=0;//测量速度
 int16 g_ExpectSpd_R=900,g_ExpectSpd_L=0;//期望速度   记得初始化
 int16 Speed_out_R,Speed_out_L;//pid之后的输出ort
-struct // pid 结构体
-{
-    float error_old;
-    float error_new;
-    float integral;
-    float p;
-    float i;
-    float d;
-    
-}PID={0,0,0,4,0,0};
 
+Speed_pid  PID;
  
 float g_fSpeedControlOut_New;            //  SpeedControl_Output
 float g_fSpeedControlOut_Old;
@@ -43,7 +34,7 @@ void Get_speed()//速度获取
      //g_RealSpd_R=0.4*g_RealSpd_R+0.6*g_Rspeed;
        
 }
-void Speed_PID()//pid控制速度
+void Speed_PID()//pid控制速度   ---位置式
 {
      int16  pwm_shuchu=0;
      //
@@ -51,7 +42,7 @@ void Speed_PID()//pid控制速度
      PID.error_new =  g_ExpectSpd_R-g_RealSpd_R;
      PID.integral+=PID.error_new;
      
-     pwm_shuchu += PID.p*PID.error_new+PID.i*PID.integral+PID.d*(PID.error_new-PID.error_old);//积分限幅
+     pwm_shuchu = PID.p*PID.error_new+PID.i*PID.integral+PID.d*(PID.error_new-PID.error_old);//积分限幅
      //输出pwm吧
      MOTOR_Ctrl(2,pwm_shuchu);
      Send(g_ExpectSpd_R,g_RealSpd_R);

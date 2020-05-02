@@ -29,7 +29,7 @@ void AD_max_min()//采集500次
          }        
       }
    //}
-   //printf("max:  %d   %d   %d   %d\n  ",ADC_max[0],ADC_max[1],ADC_max[2],ADC_max[3]);
+   printf("max:  %d   %d   %d   %d\n  ",ADC_max[0],ADC_max[1],ADC_max[2],ADC_max[3]);
 }
 
 void Read_adc(void)
