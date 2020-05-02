@@ -1,7 +1,8 @@
 
 
-float g_fDirectionControl_Out;  
 
-uint16_t  AD_left[3]={0,0,0},AD_right[3]={0,0,0};
+void AD_max_min();
+void Read_adc(void);
+void Direction_Control(void);
 
-float  Direct_error[3]={0,0,0};
+extern float g_Dirction_pwm;

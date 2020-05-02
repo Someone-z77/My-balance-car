@@ -30,7 +30,7 @@ void main(void)
         switch(KEY_Read(1))  //
         {
             case 1:
-               LED_Reverse(0);
+               LED_Reverse(0);              
                Parameter_Init();               
                 break;           
             case 2: 

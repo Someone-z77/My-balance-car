@@ -174,9 +174,12 @@ void Parameter_Init(void)
 
     FLASH_ReadBuff(2, 0, sizeof(K_pid), (char *)k_pid_temp);
 
-    PID.p=k_pid_temp[0];
-    PID.i=k_pid_temp[1];
-    PID.d=k_pid_temp[2];
+    PID_R.p=k_pid_temp[0];
+    PID_R.i=k_pid_temp[1];
+    PID_R.d=k_pid_temp[2];
+    PID_L.p=k_pid_temp[3];
+    PID_L.i=k_pid_temp[4];
+    PID_L.d=k_pid_temp[5];
 
   char  txt[20]={' '};
 

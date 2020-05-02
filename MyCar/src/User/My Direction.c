@@ -3,11 +3,15 @@
 
 float g_fDirectionControl_Out; 
 float Flag_circle1=0,Flag_circle2=0;
-short pwmR,pwmL;
-uint16_t  ADC_max[4]={0},ADC_min[4]={1000,1000,1000,1000};
 
 float  left_value[2]={0},right_value[2]={0};
-float  Direct_error[2]={0},Error;
+float Direct_error[2]={0};
+/*--------------------------------------------------*/
+
+uint16_t ADC_max[4]={0},ADC_min[4]={0};
+float  Dir_shuiping_err[3]={0},Dir_shuzhi_err[3]={0};
+float g_Dirction_pwm;
+float Direct_out1,Direct_out2;
 
 /*--------------------------------------------------------------------*/
 /*读取最大值，最小值，在赛道多处移动*/
@@ -74,19 +78,61 @@ void Read_adc(void)
      printf("  %.2f\n",Direct_error[1] );
      
 }
+
+void My_adc()
+{
+   uint16_t i=0,adc[4]={0};
+   float  ADC_guiyi[4]={0},adc_value[4][3]={0};   
+   
+   /*  中值滤波 + 滑动滤波 + 均值滤波 + 归一化*/
+   for(i=0;i<10;i++)
+   {
+     adc[0]+=ADC_Mid(ADC1,ADC1_SE10,ADC_10bit);
+     adc[1]+=ADC_Mid(ADC1,ADC1_SE11,ADC_10bit);
+     adc[2]+=ADC_Mid(ADC1,ADC1_SE12,ADC_10bit);
+     adc[3]+=ADC_Mid(ADC1,ADC1_SE13,ADC_10bit);
+   }
+
+   for(i=0;i<4;i++)
+   {         
+     adc_value[i][2]=adc_value[i][1];       
+     adc_value[i][1]=adc_value[i][0];
+     adc_value[i][0]=ADC_guiyi[i]*100;//将精度调至0-100
+     ADC_guiyi[i]=(adc[i]/10-ADC_min[i])/(ADC_max[i]-ADC_min[i]);//归一化
+   }
+   /*差比和*/
+   for(i=0;i<3;i++)
+   {
+     
+      Dir_shuiping_err[i]=(adc_value[1][i]-adc_value[2][i])/(adc_value[1][i]+adc_value[2][i]);
+      Dir_shuiping_err[i]=(Dir_shuiping_err[i]>1?1:Dir_shuiping_err[i]);
+      Dir_shuiping_err[i]=(Dir_shuiping_err[i]<-1?-1:Dir_shuiping_err[i]);
+      
+      Dir_shuzhi_err[i]=(adc_value[0][i]-adc_value[4][i])/(adc_value[0][i]+adc_value[4][i]);
+      Dir_shuzhi_err[i]=(Dir_shuzhi_err[i]>1?1:Dir_shuzhi_err[i]);
+      Dir_shuzhi_err[i]=(Dir_shuzhi_err[i]<-1?-1:Dir_shuzhi_err[i]);
+      
+   }
+   
+}
+
 void Direction_Control(void)//方向控制
 {
-      Error=(0.4*Direct_error[1]+0.6*Direct_error[0])*500;
-      pwmR=2500+Error;
-      pwmL=3050-Error;
-      MOTOR_Ctrl(1,pwmL);
-      MOTOR_Ctrl(2,pwmR);
+  
+     /*      Direction_PD     PD控制    */
+   Direct_out1=0.5*Dir_shuiping_err[0]+0.5*(Dir_shuiping_err[0]-Dir_shuiping_err[2]);
+   Direct_out2=0.5*Dir_shuzhi_err[0]+0.5*(Dir_shuzhi_err[0]-Dir_shuzhi_err[2]);
+   
+   /*     设置水平与竖直的权重，不同赛道，权重不一    */
+    
+   g_Dirction_pwm=0.7*Direct_out1+0.3*Direct_out2; 
   
 }
+
 void DirectionControl_Output(void)//方向输出平滑函数
 {
   
-  
+     
   
 }
 
