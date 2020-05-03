@@ -26,6 +26,7 @@ void KEY_Init(void)
    GPIO_PinInit(PTB20, GPI_UP, 1);
    GPIO_PinInit(PTB21, GPI_UP, 1);
    GPIO_PinInit(PTB22, GPI_UP, 1);
+   
 }
 
 /*LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
@@ -35,8 +36,8 @@ void KEY_Init(void)
 【最后更新】2017年11月24日 
 【函数名】
 【返回值】0：无按键按下 1：按键1按下  2:按键2按下  3:按键3按下
-【参数值】mode:0,不支持连续按;1,支持连续按;
-【例子  】KEY_Read(0);   //检测三个按键哪个按下
+【参数值】mode:0,不支持连续按;1,支持连续按;                           //不支持连续按就是需要松开才能按下一个按键
+【例子  】KEY_Read(0);   //检测三个按键哪个按下                       //支持连续按就是可以一直按着一个键，就可以一直读取，而上面的不能一直读取
 QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
 uint8_t KEY_Read(uint8_t mode)
 {
@@ -123,38 +124,18 @@ volatile uint8_t key_exti_flag = 3;
 【返回值】无
 【参数值】无
 QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
-void Test_ExtiKEY(void)
+void ExtiKEY_Init(void)
 { 
-    LED_Init();
+   
     
     /* 内部上拉 下降沿触发中断 中断服务函数在 IRQ_Handler.c */
     GPIO_ExtiInit(PTB20, falling_up);
     GPIO_ExtiInit(PTB21, falling_up);
     GPIO_ExtiInit(PTB22, falling_up);
     
-    /* 优先级配置 抢占优先级1  子优先级2   越小优先级越高  抢占优先级可打断别的中断 */
-    NVIC_SetPriority(PORTB_IRQn,NVIC_EncodePriority(NVIC_GetPriorityGrouping(),1,2));
+    /* 优先级配置 抢占优先级0  子优先级2   越小优先级越高  抢占优先级可打断别的中断 */
+    NVIC_SetPriority(PORTB_IRQn,NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0,2));
     NVIC_EnableIRQ(PORTB_IRQn);			         //使能PORTB_IRQn的中断  
-    while (1)
-    {  
-        //测试按键      
 
-        switch(key_exti_flag)  //
-        {
-            case 1:
-                LED_Reverse(0);
-                break;           
-            case 2:      
-                LED_Reverse(1);
-                break;
-            case 3:      
-                LED_Reverse(2);
-                break;
-            default:
-                LED_Reverse(3);
-                break;
-        }
-        //延时
-        delayms(50);
-    }
+    
 }

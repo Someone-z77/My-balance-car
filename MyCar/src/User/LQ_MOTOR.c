@@ -8,10 +8,7 @@ FTM0输出PWM信号控制电机例子
 
 
 /*---------------------------------------------------------------------------------------------------
-MOTOR_Ctrl()
-num  :  电机标号  用PTC1 和 PTC2控制电机1  用PTC3 和 PTC4控制电机2
-       （两个pin分别控制正反转）
-duty ： 占空比    范围 -FTM_PRECISON  到 +FTM_PRECISON
+MOTOR_Ctrl()    (1,A,left)(2,B,right)
 --------------------------------------------------------------------------------------------------------*/
 void MOTOR_Ctrl(uint8_t num, short duty)
 {
@@ -32,6 +29,7 @@ void MOTOR_Ctrl(uint8_t num, short duty)
             FTM_PwmDuty(FTM0, FTM_CH0, 0);
             FTM_PwmDuty(FTM0, FTM_CH1, -duty);
         }
+        break;
       case 2:
         if(duty > 0)
         {
@@ -43,140 +41,45 @@ void MOTOR_Ctrl(uint8_t num, short duty)
             FTM_PwmDuty(FTM0, FTM_CH2, 0);
             FTM_PwmDuty(FTM0, FTM_CH3, -duty);
         }
-        
+        break;
     }
 
 }
 /*------------------------------------------------------------------------------------------------------
-Test_Motor
+Motor_Enc_Init()
 --------------------------------------------------------------------------------------------------------*/
-void Test_Motor(void)
+void Motor_Enc_Init()//电机，编码器一起初始化
 {
-    LED_Init();
-    KEY_Init();
-    UART_Init(UART4, 115200);
     FTM_PwmInit(FTM0, FTM_CH0, 12000, 0);
     FTM_PwmInit(FTM0, FTM_CH1, 12000, 0);
     FTM_PwmInit(FTM0, FTM_CH2, 12000, 0);
     FTM_PwmInit(FTM0, FTM_CH3, 12000, 0);
-    printf("电机测试例程 \n");
-    printf("第一次使用的同学，调试之前最好用示波器观察一下波形 \n");
-    printf("这里使用12KHz的PWM信号控制 \n");
-    printf("按下K0按键电机不动 \n");
-    printf("按下K1按键电机向前加速 \n");
-    printf("按下K2按键电机向后加速 \n");
     
-    short duty = 0;
-    while(1)
-    {
-        switch(KEY_Read(1))     
-        {
-          case 1:
-            LED_Reverse(1); 
-            duty = 0;
-            MOTOR_Ctrl(1, duty);     //设置电机1的转速
-            MOTOR_Ctrl(2, duty);     //设置电机2的转速
-            break;           
-          case 2: 
-            LED_Reverse(2); 
-            duty += 100;
-            if(duty > FTM_PRECISON)  //防止duty超
-            {
-                duty = FTM_PRECISON;
-            }
-            MOTOR_Ctrl(1, duty);     //设置电机1的转速
-            MOTOR_Ctrl(2, duty);     //设置电机2的转速
-            break;
-          case 3: 
-            LED_Reverse(3); 
-            duty -= 100;
-            if(duty < -FTM_PRECISON)  //防止duty超
-            {
-                duty = -FTM_PRECISON;
-            }
-            MOTOR_Ctrl(1, duty);     //设置电机1的转速
-            MOTOR_Ctrl(2, duty);     //设置电机2的转速
-            break;
-          default:
-            
-            break;
-        }
-        LED_Reverse(0);    
-        delayms(100);
-    }
-
-}
-
-/*------------------------------------------------------------------------------------------------------
-Test_Enc
---------------------------------------------------------------------------------------------------------*/
-#ifdef LQ_OLED
-void Test_Enc(void)
-{
-    LED_Init();
-    KEY_Init();
-    UART_Init(UART4, 115200);
     FTM_ABInit(FTM1);
     FTM_ABInit(FTM2);
-    printf("正交解码测试例程 \n");
-
-    OLED_Init();
-    OLED_CLS();
+}
+void Test_Enc(void)
+{
     
-    OLED_P8x16Str(5,0,(uint8_t*)"LQ ENC Test"); 
-    
-    char txt[16];
+    FTM_PwmInit(FTM0, FTM_CH0, 12000, 0);
+    FTM_PwmInit(FTM0, FTM_CH1, 12000, 0);
+    FTM_PwmInit(FTM0, FTM_CH2, 12000, 0);
+    FTM_PwmInit(FTM0, FTM_CH3, 12000, 0);
+    FTM_ABInit(FTM1);
+    FTM_ABInit(FTM2);
     short speed1, speed2;
     while(1)
     {
+      MOTOR_Ctrl(1,3000);
+      MOTOR_Ctrl(2,2500);
         speed1 = FTM_ABGet(FTM1);
         speed2 = FTM_ABGet(FTM2);
         
         printf("\r\n/ENC1 %5d \r\n ",speed1);
-        sprintf(txt,"enc1:%5d ",speed1);
-        OLED_P8x16Str(20,2,(uint8_t*)txt);
         
         printf("\r\n/ENC2 %5d \r\n ",speed2);
-        sprintf(txt,"enc2:%5d ",speed2);
-        OLED_P8x16Str(20,4,(uint8_t*)txt);
-        
         delayms(100);
+         
     }
 
 }
-#else
-
-void Test_Enc(void)
-{
-    LED_Init();
-    KEY_Init();
-    UART_Init(UART4, 115200);
-    FTM_ABInit(FTM1);
-    FTM_ABInit(FTM2);
-    printf("正交解码测试例程 \n");
-
-    TFTSPI_Init(1);                 //LCD初始化  0:横屏  1：竖屏
-    TFTSPI_CLS(u16BLUE);
-    
-    TFTSPI_P8X16Str(2, 0, "LQ ENC Test", u16RED, u16BLUE);
-    
-    char txt[16]; 
-    short speed1, speed2;
-    while(1)
-    {
-        speed1 = FTM_ABGet(FTM1);
-        speed2 = FTM_ABGet(FTM2);
-        
-        printf("\r\n/ENC1 %5d \r\n ",speed1);
-        sprintf(txt,"enc1:%5d ",speed1);
-        TFTSPI_P8X16Str(2, 2, txt, u16RED, u16BLUE);
-        
-        printf("\r\n/ENC2 %5d \r\n ",speed2);
-        sprintf(txt,"enc2:%5d ",speed2);
-        TFTSPI_P8X16Str(2, 4, txt, u16RED, u16BLUE);
-        
-        delayms(100);
-    }
-
-}
-#endif

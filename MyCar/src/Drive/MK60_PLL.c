@@ -8,7 +8,7 @@ uint8_t bus_clk;//单位MHZ
 
 
 /*    内核时钟（系统时钟）=外部时钟（50M晶振频率）/ (pll_prdiv+1)*(pll_vdiv+16);
-      MCG=PLL, core = MCG, bus = MCG/5, FlexBus = MCG/3, Flash clock= MCG/8      */
+      MCG=PLL, core = MCG, bus = MCG/2, FlexBus = MCG/3, Flash clock= MCG/8      */
 
 
 void PLL_Init(clk_option opt)

@@ -25,7 +25,7 @@ if not "%~1" == "" goto debugFile
 
 @echo on 
 
-"D:\718lab\common\bin\cspybat" -f "D:\LAB718\GITHUB\My-balance-car\MyCar\settings\MyCar.Debug.general.xcl" --backend -f "D:\LAB718\GITHUB\My-balance-car\MyCar\settings\MyCar.Debug.driver.xcl" 
+"D:\ToolBoxs2\IAR\common\bin\cspybat" -f "C:\Users\lvfengping\Desktop\智能车\myCar\settings\MyCar.Debug.general.xcl" --backend -f "C:\Users\lvfengping\Desktop\智能车\myCar\settings\MyCar.Debug.driver.xcl" 
 
 @echo off 
 goto end 
@@ -34,7 +34,7 @@ goto end
 
 @echo on 
 
-"D:\718lab\common\bin\cspybat" -f "D:\LAB718\GITHUB\My-balance-car\MyCar\settings\MyCar.Debug.general.xcl" "--debug_file=%~1" --backend -f "D:\LAB718\GITHUB\My-balance-car\MyCar\settings\MyCar.Debug.driver.xcl" 
+"D:\ToolBoxs2\IAR\common\bin\cspybat" -f "C:\Users\lvfengping\Desktop\智能车\myCar\settings\MyCar.Debug.general.xcl" "--debug_file=%~1" --backend -f "C:\Users\lvfengping\Desktop\智能车\myCar\settings\MyCar.Debug.driver.xcl" 
 
 @echo off 
 :end

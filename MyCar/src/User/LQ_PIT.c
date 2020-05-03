@@ -10,6 +10,42 @@ volatile uint8_t pit1_test_flag;
 volatile uint8_t pit2_test_flag;
 volatile uint8_t pit3_test_flag;
 
+/*------------------------------------------------------------------------------------------------------
+【函    数】PIT_exitInit
+【功    能】初始化pitx的定时中断
+【参    数】pitx：pit几，time_ms：定时长/ms,PreemptPriority;SubPriority:优先级
+【返 回 值】无
+【注意事项】
+--------------------------------------------------------------------------------------------------------*/
+void PIT_exitInit(int pitx,uint32_t time_ms,uint32_t PreemptPriority, uint32_t SubPriority)
+{
+  switch(pitx)  //
+  {
+  case 0:
+    PIT_Init(PIT0,time_ms);
+    NVIC_SetPriority(PIT0_IRQn,NVIC_EncodePriority(NVIC_GetPriorityGrouping(),PreemptPriority,SubPriority));
+    NVIC_EnableIRQ(PIT0_IRQn);			          //使能PIT0_IRQn的中断
+    break;
+  case 1:
+    PIT_Init(PIT1,time_ms);
+    NVIC_SetPriority(PIT1_IRQn,NVIC_EncodePriority(NVIC_GetPriorityGrouping(),PreemptPriority,SubPriority));
+    NVIC_EnableIRQ(PIT1_IRQn);			          //使能PIT1_IRQn的中断
+    break;  
+  case 2:
+    PIT_Init(PIT2,time_ms);
+    NVIC_SetPriority(PIT2_IRQn,NVIC_EncodePriority(NVIC_GetPriorityGrouping(),PreemptPriority,SubPriority));
+    NVIC_EnableIRQ(PIT2_IRQn);			          //使能PIT2_IRQn的中断
+    break;
+  case 3:
+    PIT_Init(PIT3,time_ms);
+    NVIC_SetPriority(PIT3_IRQn,NVIC_EncodePriority(NVIC_GetPriorityGrouping(),PreemptPriority,SubPriority));
+    NVIC_EnableIRQ(PIT3_IRQn);			          //使能PIT3_IRQn的中断
+    break;
+  default:
+    printf("PIT_exitInit 输入参数错误！");
+    break;
+  }
+}
 
 /*------------------------------------------------------------------------------------------------------
 【函    数】Test_PIT
@@ -87,7 +123,7 @@ void Test_PitTimer(void)
     
     PIT_TimeStart(PIT0);       //用示波器测A17频率 100Hz 用于测试PIT计时器是否准确
     
-    uint32_t nowtime = PIT_TimeGet(PIT0);
+    uint32_t nowtime = PIT_TimeGet(PIT0);//最大计时4294967295 + 90000000=47.721858833333333333333333333333 s
     while(1)
     {
         if(PIT_TimeGet(PIT0) >= 5000)

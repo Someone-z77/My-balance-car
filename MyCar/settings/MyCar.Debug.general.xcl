@@ -1,14 +1,14 @@
-"D:\718lab\arm\bin\armproc.dll" 
+"D:\ToolBoxs2\IAR\arm\bin\armproc.dll" 
 
-"D:\718lab\arm\bin\armjlink2.dll" 
+"D:\ToolBoxs2\IAR\arm\bin\armjlink2.dll" 
 
-"D:\LAB718\GITHUB\My-balance-car\MyCar\Debug\Exe\c.out" 
+"C:\Users\lvfengping\Desktop\智能车\myCar\Debug\Exe\c.out" 
 
---plugin="D:\718lab\arm\bin\armbat.dll" 
+--plugin="D:\ToolBoxs2\IAR\arm\bin\armbat.dll" 
 
---device_macro="D:\718lab\arm\config\debugger\NXP\Kxx.dmac" 
+--device_macro="D:\ToolBoxs2\IAR\arm\config\debugger\NXP\Kxx.dmac" 
 
---device_macro="D:\718lab\arm\config\debugger\NXP\K6x_Trace.dmac" 
+--device_macro="D:\ToolBoxs2\IAR\arm\config\debugger\NXP\K6x_Trace.dmac" 
 
 
 

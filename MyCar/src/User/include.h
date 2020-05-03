@@ -52,15 +52,15 @@
 #include "LQ_Ultrasonic.h"         /* 超声波测距  例子 */
 #include "ANO_DT.h"
 #include "LQ_ICM20602.h"
-
+#include "IRQ_Handler.h"
 
 #include "status.h"
 #include "fsl_edma.h"
 #include "Uart_DMA.h"
 //-----------------------------
 #include "My  Balance.h"
-
-
+#include "My Direction.h"
+#include "My Speed.h"
 //-----------------------------
 /* 在OLED 上显示或者在TFT1.8显示 */
 #define LQ_OLED     

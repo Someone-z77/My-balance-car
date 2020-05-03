@@ -9,6 +9,24 @@
 #define BYTE3(dwTemp)       ( *( (char *)(&dwTemp) + 3) )
 
 
+
+void Send(uint16_t data1,uint16_t data2)
+{
+     uint8_t dt[2],k=0,dt2[2],i=0;
+	dt[k++]=BYTE0(data1);
+	   dt2[i++]=BYTE0(data2);
+	dt[k++]=BYTE1(data1);
+	   dt2[i++]=BYTE1(data2);
+      UART_PutChar(UART4,0x03);
+	    UART_PutChar(UART4,0xfc);
+	  for(int j=0;j<2;++j)
+			UART_PutChar(UART4,dt[j]);
+	  for(int j=0;j<2;++j)
+			UART_PutChar(UART4,dt2[j]);
+	    UART_PutChar(UART4,0xfc);
+	    UART_PutChar(UART4,0x03);
+}
+
 /////////////////////////////////////////////////////////////////////////////////////
 //Send_Data函数是协议中所有发送数据功能使用到的发送函数
 //移植时，用户应根据自身应用的情况，根据使用的通信方式，实现此函数

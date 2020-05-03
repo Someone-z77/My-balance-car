@@ -47,5 +47,5 @@ void KEY_Init(void);
 【返回值】无
 【参数值】无
 QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
-void Test_ExtiKEY(void);
+void ExtiKEY_Init(void);
 #endif

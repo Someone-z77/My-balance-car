@@ -1,5 +1,7 @@
 #ifndef __LQ_UART_H
 #define __LQ_UART_H
+
+#define K_SUM 6
 /*------------------------------------------------------------------------------------------------------
 【函    数】Test_Uart
 【功    能】测试UART 
@@ -8,6 +10,6 @@
 【实    例】Test_PIT(); //测试PIT定时器
 【注意事项】
 --------------------------------------------------------------------------------------------------------*/
-void Test_Uart(void);
-void vcan_sendware(char *buff);
+void Init_Uart_andexit(void);
+void Parameter_Init(void);
 #endif

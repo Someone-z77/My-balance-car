@@ -1,23 +1,13 @@
 #include "include.h" 
 
 
-int16 Left_pulse,Right_pluse;
-float g_Lspeed=0,g_Rspeed=0;//编码器脉冲
-float g_RealSpd=0;//测量速度
-float g_ExpectSpd=0;//期望速度   记得初始化
-float Speed_out;//pid之后的输出
 
-struct // pid 结构体
-{
-    float error_old;
-    float error_new;
-    float integral;
-    float p;
-    float i;
-    float d;
-    
-}PID;
+int16 g_RealSpd_R=0,g_RealSpd_L=0;//测量速度
+int16 g_ExpectSpd_R=0,g_ExpectSpd_L=0;//期望速度   记得初始化
+int16  PWM_R_out=0,PWM_L_out=0;
 
+Speed_pid  PID_R;
+Speed_pid  PID_L;
  
 float g_fSpeedControlOut_New;            //  SpeedControl_Output
 float g_fSpeedControlOut_Old;
@@ -25,53 +15,50 @@ float g_nSpeedControlPeriod;
 float g_fSpeedControl_Out;
 
 
-/*------------------------------------------------------*/  
-int16  read_CNT_R()//这里需要确定一下左右编码器对应的管jio
-{
-    short val;   
-    val = FTM_CNT_REG(FTM1);    
-    FTM_CNT_REG(FTM1) = 0;    //清空标志位         
 
-    return val;
-}
-int16 read_CNT_L()
-{
-    short val;   
-    val = FTM_CNT_REG(FTM1);    
-    FTM_CNT_REG(FTM1) = 0;    //清空标志位         
-
-    return val;
-}
 /*---------------------------------------------------------*/
 void Get_speed()//速度获取
 {
-     Left_pulse = read_CNT_L();
-     Right_pluse = read_CNT_R();
-     
-     //先来一个小小的滤波
-     g_Lspeed = 0.3*Left_pulse +0.7*g_Lspeed;
-     g_Rspeed = 0.3*Right_pluse  +0.7*g_Rspeed;
-     
-     //接下来是计算速度,也有一个小小的滤波
-     g_RealSpd=0.1*g_RealSpd+0.3*(g_Lspeed+g_Rspeed)*0.5;//这后面少了一系列的数！！！
+      g_RealSpd_L = FTM_ABGet(FTM1);
+      g_RealSpd_R = -FTM_ABGet(FTM2);
+      
+          delayms(100);
        
 }
-void Speed_PID()//pid控制速度
+void Speed_PID()//pid控制速度   ---位置式
 {
-     //
-     PID.error_old = PID.error_new;
-     PID.error_new =  g_ExpectSpd-g_RealSpd;
-     PID.integral+=PID.error_new;
      
-     Speed_out= PID.p*PID.error_new+PID.i*PID.integral+PID.d*(PID.error_new-PID.error_old);
-     //输出pwm吧
+     g_ExpectSpd_R=700+g_Dirction_pwm*300;
+     g_ExpectSpd_L=700-g_Dirction_pwm*300;
+     
+     /*   右轮pid及输出  */
+     PID_R.error_old = PID_R.error_new;
+     PID_R.error_new =  g_ExpectSpd_R-g_RealSpd_R;
+     PID_R.integral+=PID_R.error_new;
+     
+     PWM_R_out= PID_R.p*PID_R.error_new+PID_R.i*PID_R.integral+PID_R.d*(PID_R.error_new-PID_R.error_old);//积分限幅
+     
+     /*   左轮pid及输出  */
+     PID_L.error_old = PID_L.error_new;
+     PID_L.error_new =  g_ExpectSpd_L-g_RealSpd_L;
+     PID_L.integral+=PID_L.error_new;
+     
+     PWM_L_out= PID_L.p*PID_L.error_new+PID_L.i*PID_L.integral+PID_L.d*(PID_L.error_new-PID_L.error_old);
+     
+     MOTOR_Ctrl(2,PWM_R_out);
+     MOTOR_Ctrl(1,PWM_L_out);
+     Send(g_ExpectSpd_R,g_RealSpd_R);
+     Send(g_ExpectSpd_L,g_RealSpd_L);
+
 }
 
 void Speed_Control()//速度控制
 {
-   
-   
-   
+     MOTOR_Ctrl(2,PWM_R_out);
+     MOTOR_Ctrl(1,PWM_L_out);
+     Send(g_ExpectSpd_R,g_RealSpd_R);
+     Send(g_ExpectSpd_L,g_RealSpd_L);
+  
 }
 
 void SpeedControl_Output(void)//速度输出平滑函数
@@ -83,6 +70,7 @@ void SpeedControl_Output(void)//速度输出平滑函数
    
    g_fSpeedControl_Out = fValue * 
          (g_nSpeedControlPeriod+1) /90 + g_fSpeedControlOut_Old;
+   
 }
 
 
